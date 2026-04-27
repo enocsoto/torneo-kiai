@@ -96,7 +96,7 @@ El spec recorre el roster (goku vs vegeta), enfría acciones hasta ver el fin de
 
 ## Deploy (Railway)
 
-Guía de servicios, variables y comandos: [`docs/railway.md`](docs/railway.md).
+**Un repo en GitHub, dos servicios en Railway** (mismo repo, distintas carpetas): API con **Root directory = `backend`**, web con **Root directory = `frontend`**. Si solo hay un servicio y la raíz es `/`, el build falla (no hay `package.json` en la raíz). Detalle: [`docs/railway.md`](docs/railway.md).
 
 ## Estructura
 

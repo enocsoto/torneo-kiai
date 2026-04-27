@@ -1,5 +1,34 @@
 # Deploy en Railway
 
+## Cómo tener **API + Web** (no son dos repositorios)
+
+En **GitHub** tenés **un** repo (`torneo-kiai`). Eso es correcto.
+
+En **Railway** tenés que crear **dos servicios** (dos “apps”) que usan **el mismo** repositorio, cada uno con su **carpeta raíz** distinta:
+
+| Servicio en Railway | Qué hace | Root Directory (obligatorio) |
+|---------------------|----------|-----------------------------|
+| p. ej. `torneo-kiai-api` | NestJS | `backend` |
+| p. ej. `torneo-kiai-web` | Next.js | `frontend` |
+
+**Railway no despliega automáticamente dos binarios** desde un monorepo: si solo creás un servicio, suele clonar el repo y el contexto de build queda en **`/`** (sin `package.json` en la raíz) → eso provoca el error de Railpack que ves en los logs.
+
+### Pasos (resumen)
+
+1. En tu **proyecto** de Railway: **+ New** → **GitHub Repo** → elegí `torneo-kiai` (si aún no está conectado, autorizá a Railway).
+2. Ese primer servicio: **Settings** (o **Service settings**) → **Root Directory** → escribí **`backend`** → Guardar → **Redeploy** (o esperá un deploy nuevo).  
+   - Así se usa `backend/package.json`, `backend/Dockerfile` y `backend/railway.toml`.
+3. Otra vez: **+ New** → **GitHub Repo** → **mismo** repo `torneo-kiai` (sí, de nuevo) → ponele un nombre, p. ej. **Web** → en **Root Directory** → **`frontend`** → Guardar.
+4. En el servicio **Web**, configurá `NEXT_PUBLIC_API_URL` con la URL pública del servicio de la API (y en la **API**, `FRONTEND_ORIGIN` con la URL del front).
+
+> **Config file:** si usás *Config as code*, en la UI podés fijar la ruta al manifiesto, p. ej. `/backend/railway.toml` o `/frontend/railway.toml`, pero lo más simple es poner **Root Directory** en `backend` o `frontend` y que se lea el `railway.toml` de esa carpeta.
+
+### Qué mirar en el log
+
+Si el build “analiza” solo cosas como `.github/`, `docs/`, `frontend/`, `README.md` (raíz), el servicio **todavía está construyendo desde `/`**. Corregí **Root Directory** y volvé a desplegar.
+
+---
+
 ## Si el build falla con Railpack (“could not determine how to build” / `start.sh`)
 
 Eso pasa cuando el despliegue usa la **raíz del repo** como contexto: ahí **no hay** `package.json`, y Railpack no detecta Node/Next y acaba en idiomas soportados limitados (p. ej. “Staticfile” solamente).
