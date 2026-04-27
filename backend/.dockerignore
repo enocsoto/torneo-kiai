@@ -1,0 +1,17 @@
+# Menor contexto → subida y COPY más rápidos en Railway
+node_modules
+dist
+coverage
+.git
+.gitignore
+*.md
+.env
+.env.*
+!.env.example
+npm-debug.log*
+test
+**/*.spec.ts
+e2e
+.DS_Store
+.vscode
+.idea
