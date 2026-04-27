@@ -40,7 +40,26 @@ export class RosterUnlockService {
 
     // Intento 1: buscar el doc existente (caso más frecuente, evita calcular IDs).
     const existing = await this.roster.findOne({ guestId: g }).exec();
-    if (existing) return existing;
+    if (existing) {
+      // Si el roster se creó cuando aún no había guerreros (p. ej. visita previa al
+      // seed en prod), quedó con unlocked vacío. Reparar cuando la DB ya tenga datos.
+      if (existing.unlockedWarriorIds.length === 0) {
+        const first = await this.firstWarriorObjectIds(
+          ROSTER_INITIAL_UNLOCK_COUNT,
+        );
+        if (first.length > 0) {
+          const updated = await this.roster
+            .findOneAndUpdate(
+              { guestId: g },
+              { $set: { unlockedWarriorIds: first } },
+              { returnDocument: 'after' },
+            )
+            .exec();
+          if (updated) return updated;
+        }
+      }
+      return existing;
+    }
 
     // Si no existe, calculamos los IDs iniciales y hacemos un upsert atómico.
     // findOneAndUpdate con upsert:true es una operación atómica en MongoDB y
@@ -55,7 +74,7 @@ export class RosterUnlockService {
       .findOneAndUpdate(
         { guestId: g },
         { $setOnInsert: { guestId: g, unlockedWarriorIds: first } },
-        { upsert: true, returnDocument: "after" },
+        { upsert: true, returnDocument: 'after' },
       )
       .exec();
 
@@ -168,7 +187,7 @@ export class RosterUnlockService {
       .findOneAndUpdate(
         { guestId: g },
         { $addToSet: { unlockedWarriorIds: nextW._id } },
-        { returnDocument: "after" },
+        { returnDocument: 'after' },
       )
       .exec();
     if (!r) return { desbloqueado: false };

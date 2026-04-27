@@ -64,7 +64,7 @@ export class PlayerProgressService {
       .findOneAndUpdate(
         { guestId: g, warriorId: wid },
         { $inc: { partidas: 1 } },
-        { upsert: true, returnDocument: "after" },
+        { upsert: true, returnDocument: 'after' },
       )
       .lean()
       .exec();
@@ -291,7 +291,7 @@ export class PlayerProgressService {
       .findOneAndUpdate(
         { guestId: g, warriorId: wid },
         { $inc: { wins: 1 } },
-        { upsert: true, returnDocument: "after" },
+        { upsert: true, returnDocument: 'after' },
       )
       .lean()
       .exec();
