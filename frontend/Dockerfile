@@ -1,7 +1,8 @@
 # syntax=docker/dockerfile:1
 FROM node:20-alpine AS deps
 WORKDIR /app
-COPY package*.json ./
+# .npmrc define legacy-peer-deps (react-joyride vs React 19); debe existir antes de npm ci
+COPY package*.json .npmrc ./
 RUN npm ci
 
 FROM deps AS build
@@ -15,6 +16,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=3000
 COPY --from=build /app/package*.json ./
+COPY --from=build /app/.npmrc ./
 RUN npm ci --omit=dev
 COPY --from=build /app/.next/standalone ./
 COPY --from=build /app/.next/static ./.next/static
