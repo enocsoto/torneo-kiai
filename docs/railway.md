@@ -97,9 +97,31 @@ Si usas **Dockerfile** en lugar de Nixpacks, los mismos directorios: contexto `b
 
 Una vez la API tenga `MONGODB_URI` correcto, ejecuta **una vez** el seed (guerreros, ataques, etc.):
 
+**Opción 1 — Desde tu máquina** (misma `MONGODB_URI` que en Railway, copiada de Variables del servicio API o de MongoDB):
+
 ```bash
-# con Railway CLI, o localmente apuntando a la URI de prod:
-cd backend && MONGODB_URI="…" npx ts-node -r tsconfig-paths/register src/seed-once.ts
+cd backend
+export MONGODB_URI="mongodb+srv://…"   # o la que te dé Railway
+npm install   # asegúrate de tener dependencias
+npm run seed
+```
+
+**Opción 2 — Contenedor de la API en Railway** (la imagen ya trae `dist/`; no hace falta `ts-node`):
+
+En el servicio de la API: **Settings →** abre la shell/terminal (o `railway ssh` / **Run** con la CLI vinculada al proyecto) y ejecuta:
+
+```bash
+node dist/seed-once.js
+```
+
+`MONGODB_URI` ya debería estar inyectada como en el despliegue. Si hace falta, exporta el valor antes de `node`.
+
+**Opción 3 — Railway CLI en local** (inyecta `MONGODB_URI` del proyecto; primero compila, el comando se ejecuta en **tu** máquina):
+
+```bash
+cd backend
+npm run build
+railway run --service <nombre-servicio-api> node dist/seed-once.js
 ```
 
 ## Scripts del repo (referencia)
