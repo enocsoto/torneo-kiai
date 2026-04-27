@@ -1,0 +1,43 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: torneo-kiai-mongo
+    ports:
+      - "27029:27017"
+    volumes:
+      - torneo_kiai_mongo_data:/data/db
+    restart: unless-stopped
+
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: torneo-kiai-api
+    ports:
+      - "4004:4004"
+    environment:
+      PORT: "4004"
+      MONGODB_URI: mongodb://mongo:27017/torneo-kiai-tournament
+      FRONTEND_ORIGIN: http://localhost:3000
+      GUEST_MAX_BATTLES_PER_HOUR: "32"
+    depends_on:
+      - mongo
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:4004
+    container_name: torneo-kiai-web
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: "3000"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  torneo_kiai_mongo_data:

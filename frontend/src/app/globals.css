@@ -1,0 +1,9 @@
+@import "tailwindcss";
+@import "./globals/tokens.css";
+@import "./globals/layout.css";
+@import "./globals/animations.css";
+@import "./globals/battle-arena.css";
+@import "./globals/combat-epic-ko.css";
+@import "./globals/combat-epic-home.css";
+@import "./globals/navigation.css";
+@import "./globals/combat-epic-battle.css";

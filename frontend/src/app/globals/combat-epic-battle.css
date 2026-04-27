@@ -1,0 +1,411 @@
+/* Attack cards: energy border and light sweep */
+@keyframes attack-border-flow {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes attack-sheen {
+  0% {
+    transform: translateX(-120%) skewX(-12deg);
+  }
+  100% {
+    transform: translateX(220%) skewX(-12deg);
+  }
+}
+
+.attack-epic-shell {
+  position: relative;
+  border-radius: 1rem;
+  padding: 1px;
+  overflow: hidden;
+  min-height: 5.25rem;
+}
+
+.attack-epic-shell::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  z-index: 0;
+  background: conic-gradient(
+    from 0deg,
+    rgba(251, 146, 60, 0.55),
+    rgba(253, 224, 71, 0.35),
+    rgba(249, 115, 22, 0.45),
+    rgba(254, 243, 199, 0.4),
+    rgba(251, 146, 60, 0.55)
+  );
+  animation: attack-border-flow 3.5s linear infinite;
+  opacity: 0.55;
+}
+
+.attack-epic-shell--sky::before {
+  background: conic-gradient(
+    from 0deg,
+    rgba(56, 189, 248, 0.55),
+    rgba(125, 211, 252, 0.35),
+    rgba(99, 102, 241, 0.45),
+    rgba(165, 243, 252, 0.4),
+    rgba(34, 211, 238, 0.5),
+    rgba(56, 189, 248, 0.55)
+  );
+}
+
+.attack-epic-shell > .attack-epic-inner {
+  position: relative;
+  z-index: 1;
+  border-radius: calc(1rem - 1px);
+  height: 100%;
+}
+
+.attack-epic-sheen {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.attack-epic-sheen::after {
+  content: "";
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  left: 0;
+  width: 38%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.14),
+    transparent
+  );
+  animation: attack-sheen 3.2s var(--ease-in-out) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .attack-epic-shell::before {
+    animation: none;
+    opacity: 0.35;
+  }
+  .attack-epic-sheen::after {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+/* On damage: lightning + flash */
+@keyframes panel-hit-flash {
+  0% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes hit-bolt-snap {
+  0% {
+    opacity: 0;
+    transform: scaleY(0.2) translateY(-8%);
+  }
+  15% {
+    opacity: 1;
+    transform: scaleY(1) translateY(0);
+  }
+  55% {
+    opacity: 0.65;
+  }
+  100% {
+    opacity: 0;
+    transform: scaleY(0.85) translateY(4%);
+  }
+}
+
+.panel-hit-epic {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+.panel-hit-epic__flash {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 35%,
+    rgba(255, 255, 255, 0.42) 0%,
+    rgba(251, 191, 36, 0.18) 28%,
+    transparent 58%
+  );
+  mix-blend-mode: screen;
+  animation: panel-hit-flash 520ms var(--ease-out) forwards;
+}
+
+.panel-hit-epic--crit .panel-hit-epic__flash {
+  background: radial-gradient(
+    circle at 50% 32%,
+    rgba(255, 255, 255, 0.65) 0%,
+    rgba(253, 224, 71, 0.35) 22%,
+    rgba(249, 115, 22, 0.2) 45%,
+    transparent 60%
+  );
+}
+
+.panel-hit-epic__bolt {
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  width: 3px;
+  height: 58%;
+  margin-left: -1.5px;
+  border-radius: 2px;
+  transform-origin: top center;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.95) 18%,
+    rgba(125, 211, 252, 0.95) 45%,
+    rgba(251, 191, 36, 0.85) 72%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 12px rgba(255, 255, 255, 0.9),
+    0 0 28px rgba(56, 189, 248, 0.65),
+    0 0 42px rgba(251, 146, 60, 0.45);
+  mix-blend-mode: screen;
+  animation: hit-bolt-snap 480ms var(--ease-out) forwards;
+}
+
+.panel-hit-epic__bolt--side {
+  left: 22%;
+  height: 52%;
+  transform: rotate(-8deg);
+  animation-delay: 40ms;
+}
+
+.panel-hit-epic__bolt--side2 {
+  left: auto;
+  right: 18%;
+  height: 48%;
+  transform: rotate(10deg);
+  animation-delay: 70ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel-hit-epic__flash {
+    animation: none;
+    opacity: 0.25;
+  }
+  .panel-hit-epic__bolt,
+  .panel-hit-epic__bolt--side,
+  .panel-hit-epic__bolt--side2 {
+    animation: none;
+    opacity: 0.4;
+  }
+}
+
+@keyframes dmg-float-epic {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+    filter: drop-shadow(0 0 12px rgba(248, 113, 113, 0.9));
+  }
+  35% {
+    filter: drop-shadow(0 0 22px rgba(251, 191, 36, 0.85));
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -44px) scale(1.18);
+    filter: drop-shadow(0 0 8px rgba(248, 113, 113, 0));
+  }
+}
+
+.dmg-float-epic {
+  background: linear-gradient(
+    185deg,
+    #fffef5 0%,
+    #fde047 32%,
+    #fb923c 58%,
+    #ef4444 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  text-shadow: none;
+  filter: drop-shadow(0 2px 14px rgba(251, 146, 60, 0.75));
+  animation: dmg-float-epic 950ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+.dmg-float-epic--crit {
+  font-size: 1.35rem;
+  animation-duration: 1100ms;
+  background: linear-gradient(
+    185deg,
+    #ffffff 0%,
+    #fef08a 22%,
+    #f97316 48%,
+    #dc2626 72%,
+    #7f1d1d 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dmg-float-epic {
+    animation: none;
+    color: #fecaca;
+    background: none;
+    -webkit-text-fill-color: #fecaca;
+    opacity: 0;
+  }
+}
+
+/* Envestida del luchador al atacar (lado A → derecha, lado B → izquierda) */
+@keyframes fighter-lunge-a {
+  0% {
+    transform: translateX(0) scale(1);
+  }
+  38% {
+    transform: translateX(14%) scale(1.05);
+  }
+  100% {
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes fighter-lunge-b {
+  0% {
+    transform: translateX(0) scale(1);
+  }
+  38% {
+    transform: translateX(-14%) scale(1.05);
+  }
+  100% {
+    transform: translateX(0) scale(1);
+  }
+}
+
+.fighter-lunge-a {
+  animation: fighter-lunge-a 520ms cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform;
+}
+
+.fighter-lunge-b {
+  animation: fighter-lunge-b 520ms cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fighter-lunge-a,
+  .fighter-lunge-b {
+    animation: none;
+  }
+}
+
+/* Battle intro (VS overlay) */
+@keyframes battle-cinematic-enter {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes battle-cinematic-exit {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes battle-cinematic-fighter-l {
+  0% {
+    opacity: 0;
+    transform: translateX(-18%) scale(0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes battle-cinematic-fighter-r {
+  0% {
+    opacity: 0;
+    transform: translateX(18%) scale(0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.battle-cinematic__backdrop--in {
+  animation: battle-cinematic-enter 420ms var(--ease-out) forwards;
+}
+
+.battle-cinematic__backdrop--out {
+  pointer-events: none;
+  animation: battle-cinematic-exit 520ms var(--ease-in) forwards;
+}
+
+.battle-cinematic-fighter--l {
+  animation: battle-cinematic-fighter-l 680ms var(--ease-out) backwards;
+  animation-delay: 120ms;
+}
+
+.battle-cinematic-fighter--r {
+  animation: battle-cinematic-fighter-r 680ms var(--ease-out) backwards;
+  animation-delay: 120ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .battle-cinematic__backdrop--in,
+  .battle-cinematic__backdrop--out {
+    animation: none;
+    opacity: 0;
+  }
+  .battle-cinematic-fighter--l,
+  .battle-cinematic-fighter--r {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes battle-strike-callout {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.battle-strike-callout {
+  animation: battle-strike-callout 360ms cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .battle-strike-callout {
+    animation: none;
+  }
+}

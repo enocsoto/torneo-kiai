@@ -1,0 +1,104 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+      - name: Install & test backend
+        working-directory: backend
+        run: |
+          npm ci
+          npx jest src/battles/combat-math.spec.ts
+          npm run build
+      - name: Export OpenAPI (artifact)
+        working-directory: backend
+        run: npm run openapi:export
+      - uses: actions/upload-artifact@v4
+        with:
+          name: openapi.json
+          path: backend/openapi.json
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Build frontend
+        working-directory: frontend
+        env:
+          NEXT_PUBLIC_API_URL: http://127.0.0.1:4004
+        run: |
+          npm ci
+          npm run build
+
+  e2e:
+    runs-on: ubuntu-latest
+    services:
+      mongo:
+        image: mongo:7
+        ports:
+          - 27029:27017
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Prepare backend
+        working-directory: backend
+        env:
+          MONGODB_URI: mongodb://127.0.0.1:27029/torneo-kiai-ci-e2e
+        run: |
+          npm ci
+          npm run seed
+          npm run build
+      - name: Start API
+        working-directory: backend
+        env:
+          MONGODB_URI: mongodb://127.0.0.1:27029/torneo-kiai-ci-e2e
+          PORT: "4004"
+        run: |
+          nohup node dist/main.js > /tmp/api.log 2>&1 &
+          for i in $(seq 1 45); do
+            curl -sf http://127.0.0.1:4004/health && exit 0
+            sleep 1
+          done
+          cat /tmp/api.log
+          exit 1
+      - name: Install front & Playwright
+        working-directory: frontend
+        run: |
+          npm ci
+          npx playwright install chromium
+      - name: Start Next.js dev
+        working-directory: frontend
+        env:
+          NEXT_PUBLIC_API_URL: http://127.0.0.1:4004
+        run: |
+          nohup npm run dev -- --hostname 127.0.0.1 --port 3000 > /tmp/next.log 2>&1 &
+          for i in $(seq 1 90); do
+            curl -sf http://127.0.0.1:3000/ && exit 0
+            sleep 1
+          done
+          cat /tmp/next.log
+          exit 1
+      - name: E2E
+        working-directory: frontend
+        env:
+          PLAYWRIGHT_BASE_URL: http://127.0.0.1:3000
+        run: npm run test:e2e

@@ -1,0 +1,939 @@
+/* ── Coffee modal ─────────────────────────────────────────── */
+@keyframes coffee-steam-rise {
+  0%   { opacity: 0;    transform: translateY(0)   scaleX(1); }
+  40%  { opacity: 0.8;  transform: translateY(-6px) scaleX(1.3); }
+  100% { opacity: 0;    transform: translateY(-12px) scaleX(0.6); }
+}
+
+.coffee-steam {
+  animation: coffee-steam-rise 1.8s ease-in-out infinite;
+}
+.coffee-steam-1 { animation-delay: 0s; }
+.coffee-steam-2 { animation-delay: 0.5s; }
+.coffee-steam-3 { animation-delay: 1s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .coffee-steam { animation: none; opacity: 0; }
+}
+
+/* ── Entrada escalonada del roster ────────────────────────── */
+@keyframes roster-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.roster-card-enter {
+  animation: roster-enter 280ms var(--ease-out) backwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roster-card-enter {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes pulse-soft {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.skeleton-pulse {
+  animation: pulse-soft 1.2s var(--ease-in-out) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-pulse {
+    animation: none;
+    opacity: 0.35;
+  }
+}
+
+@keyframes hp-bar-hit {
+  0% {
+    filter: brightness(1.45) saturate(1.25);
+    box-shadow: 0 0 12px rgba(248, 113, 113, 0.65);
+  }
+  100% {
+    filter: brightness(1) saturate(1);
+    box-shadow: none;
+  }
+}
+
+.hp-bar-hit {
+  animation: hp-bar-hit 520ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hp-bar-hit {
+    animation: none;
+  }
+}
+
+@keyframes panel-damage-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  15% {
+    transform: translateX(-5px);
+  }
+  30% {
+    transform: translateX(5px);
+  }
+  45% {
+    transform: translateX(-3px);
+  }
+  60% {
+    transform: translateX(3px);
+  }
+}
+
+.panel-damage-shake {
+  animation: panel-damage-shake 420ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel-damage-shake {
+    animation: none;
+  }
+}
+
+@keyframes dmg-float-up {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -36px) scale(1.08);
+  }
+}
+
+.dmg-float-up {
+  animation: dmg-float-up 900ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dmg-float-up {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+@keyframes turn-active-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(251, 146, 60, 0.2),
+      var(--elevate-shadow);
+  }
+  50% {
+    box-shadow:
+      0 0 0 2px rgba(251, 146, 60, 0.45),
+      var(--elevate-shadow);
+  }
+}
+
+.turn-active-glow {
+  animation: turn-active-glow 2.4s var(--ease-in-out) infinite;
+}
+
+html[data-theme="light"] .turn-active-glow {
+  animation: turn-active-glow-light 2.4s var(--ease-in-out) infinite;
+}
+
+@keyframes turn-active-glow-light {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(234, 88, 12, 0.2),
+      0 8px 28px rgba(15, 23, 42, 0.06);
+  }
+  50% {
+    box-shadow:
+      0 0 0 2px rgba(234, 88, 12, 0.32),
+      0 12px 32px rgba(234, 88, 12, 0.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .turn-active-glow {
+    animation: none;
+    box-shadow:
+      0 0 0 2px rgba(251, 146, 60, 0.35),
+      var(--elevate-shadow);
+  }
+  html[data-theme="light"] .turn-active-glow {
+    box-shadow:
+      0 0 0 2px rgba(234, 88, 12, 0.3),
+      0 8px 24px rgba(15, 23, 42, 0.06);
+  }
+}
+
+.log-line-highlight {
+  background: var(--log-highlight-bg);
+  border-radius: 0.375rem;
+  outline: 1px solid var(--log-highlight-ring);
+}
+
+/* ── Unlock Reveal overlays ─────────────────────────────────────────────── */
+@keyframes unlock-reveal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.82) translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes unlock-badge-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes unlock-glow-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes unlock-glow-pulse-gold {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [style*="unlock-reveal-in"],
+  [style*="unlock-badge-in"],
+  [style*="unlock-glow-pulse"] {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ── OOP Guide: beacon ping ─────────────────────────────────────────────── */
+@keyframes oop-beacon-ping {
+  75%,
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [style*="oop-beacon-ping"] {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+/* ── Skills page animations ─────────────────────────────────────────────── */
+@keyframes skill-slide-left {
+  from {
+    opacity: 0;
+    transform: translateX(-18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes skill-slide-right {
+  from {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.skill-panel-left {
+  animation: skill-slide-left 320ms var(--ease-out) both;
+}
+
+.skill-panel-right {
+  animation: skill-slide-right 320ms var(--ease-out) both;
+}
+
+@keyframes skill-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.skill-card-enter {
+  animation: skill-card-enter 280ms var(--ease-out) both;
+}
+
+@keyframes skill-glow-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(251, 146, 60, 0.22),
+      0 0 24px rgba(251, 146, 60, 0.08),
+      var(--shadow-card);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px rgba(251, 146, 60, 0.38),
+      0 0 32px rgba(251, 146, 60, 0.16),
+      var(--shadow-card);
+  }
+}
+
+.skill-glow-pulse {
+  animation: skill-glow-pulse 2.6s var(--ease-in-out) infinite;
+}
+
+html[data-theme="light"] .skill-glow-pulse {
+  animation: skill-glow-pulse-light 2.6s var(--ease-in-out) infinite;
+}
+
+@keyframes skill-glow-pulse-light {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(234, 88, 12, 0.2),
+      0 0 20px rgba(234, 88, 12, 0.05),
+      0 8px 28px rgba(15, 23, 42, 0.07);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px rgba(234, 88, 12, 0.32),
+      0 0 28px rgba(234, 88, 12, 0.1),
+      0 12px 32px rgba(15, 23, 42, 0.08);
+  }
+}
+
+@keyframes warrior-aura {
+  0%,
+  100% {
+    opacity: 0.28;
+    transform: translate(-50%, -10%) scale(1);
+  }
+  50% {
+    opacity: 0.44;
+    transform: translate(-50%, -10%) scale(1.08);
+  }
+}
+
+.warrior-aura {
+  animation: warrior-aura 3.2s var(--ease-in-out) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skill-panel-left,
+  .skill-panel-right,
+  .skill-card-enter {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .skill-glow-pulse {
+    animation: none;
+    box-shadow:
+      0 0 0 1px rgba(251, 146, 60, 0.3),
+      var(--shadow-card);
+  }
+
+  html[data-theme="light"] .skill-glow-pulse {
+    box-shadow:
+      0 0 0 1px rgba(234, 88, 12, 0.28),
+      0 8px 24px rgba(15, 23, 42, 0.06);
+  }
+
+  .warrior-aura {
+    animation: none;
+    opacity: 0.32;
+  }
+}
+
+/* ── Victory Toast (fin de combate) ─────────────────────────────────────── */
+@keyframes victory-toast-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.93);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes victory-shimmer {
+  0%   { transform: translateX(-120%) skewX(-12deg); }
+  100% { transform: translateX(260%)  skewX(-12deg); }
+}
+
+@keyframes victory-glow-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 28px rgba(251, 146, 60, 0.22),
+      0 0 0 1px rgba(251, 146, 60, 0.28),
+      0 12px 48px rgba(0, 0, 0, 0.55);
+  }
+  50% {
+    box-shadow:
+      0 0 44px rgba(251, 146, 60, 0.38),
+      0 0 0 1px rgba(251, 146, 60, 0.48),
+      0 12px 48px rgba(0, 0, 0, 0.55);
+  }
+}
+
+@keyframes victory-icon-pulse {
+  0%, 100% { filter: drop-shadow(0 0 6px rgba(251, 146, 60, 0.5)); }
+  50%       { filter: drop-shadow(0 0 18px rgba(251, 146, 60, 0.9)); }
+}
+
+@keyframes victory-glow-pulse-light {
+  0%, 100% {
+    box-shadow:
+      0 0 18px rgba(234, 88, 12, 0.14),
+      0 0 0 1px rgba(234, 88, 12, 0.22),
+      0 10px 32px rgba(15, 23, 42, 0.07);
+  }
+  50% {
+    box-shadow:
+      0 0 30px rgba(234, 88, 12, 0.22),
+      0 0 0 1px rgba(234, 88, 12, 0.32),
+      0 12px 40px rgba(15, 23, 42, 0.09);
+  }
+}
+
+@keyframes victory-icon-pulse-light {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(234, 88, 12, 0.35)); }
+  50%       { filter: drop-shadow(0 0 12px rgba(234, 88, 12, 0.55)); }
+}
+
+.victory-toast {
+  pointer-events: auto;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  width: 336px;
+  max-width: calc(100vw - 2rem);
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #1c0d00 0%, #0e0600 55%, #140900 100%);
+  border: 1px solid rgba(251, 146, 60, 0.32);
+  padding: 1rem 1.25rem;
+  animation:
+    victory-toast-enter 400ms cubic-bezier(0.23, 1, 0.32, 1) both,
+    victory-glow-pulse  3s ease-in-out 500ms infinite;
+}
+
+.victory-toast-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(251, 146, 60, 0.07) 38%,
+    rgba(251, 146, 60, 0.13) 50%,
+    rgba(251, 146, 60, 0.07) 62%,
+    transparent 100%
+  );
+  animation: victory-shimmer 2.6s ease-in-out 700ms infinite;
+}
+
+.victory-toast-icon {
+  font-size: 2.1rem;
+  line-height: 1;
+  flex-shrink: 0;
+  animation: victory-icon-pulse 2s ease-in-out infinite;
+}
+
+.victory-toast-kicker {
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(251, 146, 60, 0.7);
+  margin-bottom: 0.18rem;
+}
+
+.victory-toast-name {
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 1.15;
+  background: linear-gradient(
+    180deg,
+    #fff7ed 0%,
+    #fbbf24 30%,
+    #fb923c 58%,
+    #ea580c 82%,
+    #9a3412 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 1px 8px rgba(234, 88, 12, 0.45));
+}
+
+.victory-toast-sub {
+  font-size: 0.68rem;
+  color: rgba(251, 146, 60, 0.5);
+  margin-top: 0.22rem;
+}
+
+/* Victory + epic toasts: light theme */
+html[data-theme="light"] .victory-toast,
+html[data-theme="light"] .epic-success-toast {
+  background: linear-gradient(135deg, #fffbeb 0%, #ffedd5 40%, #ffffff 100%);
+  border: 1px solid rgba(234, 88, 12, 0.32);
+  animation:
+    victory-toast-enter 400ms cubic-bezier(0.23, 1, 0.32, 1) both,
+    victory-glow-pulse-light 3s ease-in-out 500ms infinite;
+}
+
+html[data-theme="light"] .victory-toast-shimmer,
+html[data-theme="light"] .epic-success-toast-shimmer {
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(234, 88, 12, 0.05) 38%,
+    rgba(234, 88, 12, 0.1) 50%,
+    rgba(234, 88, 12, 0.05) 62%,
+    transparent 100%
+  );
+}
+
+html[data-theme="light"] .victory-toast-icon {
+  animation: victory-icon-pulse-light 2s ease-in-out infinite;
+}
+
+html[data-theme="light"] .victory-toast-kicker,
+html[data-theme="light"] .epic-success-toast-kicker {
+  color: rgba(194, 65, 12, 0.88);
+}
+
+html[data-theme="light"] .victory-toast-name {
+  background: linear-gradient(
+    180deg,
+    #0f172a 0%,
+    #9a3412 28%,
+    #c2410c 52%,
+    #ea580c 78%,
+    #f97316 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 1px 2px rgba(15, 23, 42, 0.08));
+}
+
+html[data-theme="light"] .victory-toast-sub,
+html[data-theme="light"] .epic-success-toast-sub {
+  color: rgba(194, 65, 12, 0.62);
+}
+
+html[data-theme="light"] .epic-success-toast-icon {
+  color: #d97706;
+  text-shadow: 0 0 14px rgba(234, 88, 12, 0.35);
+  animation: victory-icon-pulse-light 2s ease-in-out infinite;
+}
+
+html[data-theme="light"] .epic-success-toast-title {
+  background: linear-gradient(
+    180deg,
+    #0f172a 0%,
+    #9a3412 35%,
+    #ea580c 70%,
+    #f97316 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 1px 2px rgba(15, 23, 42, 0.06));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .victory-toast {
+    animation: none;
+    box-shadow:
+      0 0 0 1px rgba(251, 146, 60, 0.35),
+      0 8px 32px rgba(0, 0, 0, 0.5);
+  }
+  .victory-toast-shimmer { animation: none; }
+  .victory-toast-icon    { animation: none; }
+  html[data-theme="light"] .victory-toast,
+  html[data-theme="light"] .epic-success-toast {
+    animation: none;
+    box-shadow:
+      0 0 0 1px rgba(234, 88, 12, 0.28),
+      0 8px 28px rgba(15, 23, 42, 0.1);
+  }
+  html[data-theme="light"] .victory-toast-shimmer { animation: none; }
+  html[data-theme="light"] .victory-toast-icon    { animation: none; }
+  html[data-theme="light"] .epic-success-toast-shimmer { animation: none; }
+  html[data-theme="light"] .epic-success-toast-icon    { animation: none; }
+}
+
+/* ── Epic success toast (saved state, UI actions) — same energy as victory ─ */
+.epic-success-toast {
+  pointer-events: auto;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  width: 336px;
+  max-width: calc(100vw - 2rem);
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #1c0d00 0%, #0e0600 55%, #140900 100%);
+  border: 1px solid rgba(251, 146, 60, 0.32);
+  padding: 1rem 1.25rem;
+  animation:
+    victory-toast-enter 400ms cubic-bezier(0.23, 1, 0.32, 1) both,
+    victory-glow-pulse 3s ease-in-out 500ms infinite;
+}
+
+.epic-success-toast-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(251, 146, 60, 0.07) 38%,
+    rgba(251, 146, 60, 0.13) 50%,
+    rgba(251, 146, 60, 0.07) 62%,
+    transparent 100%
+  );
+  animation: victory-shimmer 2.6s ease-in-out 700ms infinite;
+}
+
+.epic-success-toast-icon {
+  font-size: 1.85rem;
+  line-height: 1;
+  flex-shrink: 0;
+  color: rgba(252, 211, 77, 0.95);
+  text-shadow: 0 0 20px rgba(251, 146, 60, 0.55);
+  animation: victory-icon-pulse 2s ease-in-out infinite;
+}
+
+.epic-success-toast-kicker {
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(251, 146, 60, 0.72);
+  margin-bottom: 0.2rem;
+}
+
+.epic-success-toast-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.3;
+  background: linear-gradient(
+    180deg,
+    #fff7ed 0%,
+    #fbbf24 32%,
+    #fb923c 70%,
+    #ea580c 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 1px 6px rgba(234, 88, 12, 0.4));
+}
+
+.epic-success-toast-sub {
+  font-size: 0.65rem;
+  line-height: 1.3;
+  color: rgba(251, 146, 60, 0.48);
+  margin-top: 0.2rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .epic-success-toast {
+    animation: none;
+    box-shadow:
+      0 0 0 1px rgba(251, 146, 60, 0.35),
+      0 8px 32px rgba(0, 0, 0, 0.5);
+  }
+  .epic-success-toast-shimmer { animation: none; }
+  .epic-success-toast-icon    { animation: none; }
+}
+
+/* Battle log: cinematic replay ribbon (win / finished panel) */
+.battle-replay-ribbon-epic {
+  pointer-events: auto;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, #1c0d00 0%, #0e0600 55%, #140900 100%);
+  border: 1px solid rgba(251, 146, 60, 0.32);
+  box-shadow:
+    0 0 28px rgba(251, 146, 60, 0.12),
+    0 8px 32px rgba(0, 0, 0, 0.4);
+  animation:
+    victory-toast-enter 400ms cubic-bezier(0.23, 1, 0.32, 1) both,
+    victory-glow-pulse 3s ease-in-out 500ms infinite;
+}
+
+.battle-replay-ribbon-epic-head {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-width: 0;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 0.9rem 1.1rem 0.75rem;
+}
+
+.battle-replay-ribbon-epic-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(251, 191, 36, 0.38);
+  background: color-mix(in srgb, rgba(120, 53, 15, 0.55) 100%, rgba(0, 0, 0, 0));
+  color: rgba(252, 211, 77, 0.96);
+  filter: drop-shadow(0 0 12px rgba(251, 146, 60, 0.45));
+  animation: victory-icon-pulse 2s ease-in-out infinite;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+
+.battle-replay-ribbon-epic-icon--live {
+  border-color: rgba(52, 211, 153, 0.5);
+  color: #6ee7b7;
+  filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.45));
+  animation: battle-replay-icon-live 1.4s ease-in-out infinite;
+}
+
+@keyframes battle-replay-icon-live {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 16px 2px rgba(16, 185, 129, 0.35);
+  }
+}
+
+.battle-replay-ribbon-epic-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  background: linear-gradient(
+    180deg,
+    #fff7ed 0%,
+    #fbbf24 30%,
+    #fb923c 58%,
+    #ea580c 82%,
+    #9a3412 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 1px 6px rgba(234, 88, 12, 0.35));
+}
+
+.battle-replay-ribbon-epic-track {
+  position: relative;
+  z-index: 1;
+  height: 0.28rem;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.battle-replay-ribbon-epic-fill {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    #b45309 0%,
+    #fbbf24 38%,
+    #fef3c7 50%,
+    #fbbf24 62%,
+    #c2410c 100%
+  );
+  background-size: 200% 100%;
+  animation: battle-replay-fill-sheen 2.2s ease-in-out infinite;
+  box-shadow: 0 0 12px rgba(251, 191, 36, 0.35);
+  transition: width 0.2s ease-out;
+}
+
+.battle-replay-ribbon-epic-fill--paused {
+  animation: none;
+  background-position: 0% 0%;
+}
+
+@keyframes battle-replay-fill-sheen {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 0%;
+  }
+}
+
+html[data-theme="light"] .battle-replay-ribbon-epic {
+  background: linear-gradient(135deg, #fffbeb 0%, #ffedd5 40%, #ffffff 100%);
+  border: 1px solid rgba(234, 88, 12, 0.32);
+  animation:
+    victory-toast-enter 400ms cubic-bezier(0.23, 1, 0.32, 1) both,
+    victory-glow-pulse-light 3s ease-in-out 500ms infinite;
+}
+
+html[data-theme="light"] .battle-replay-ribbon-epic-icon {
+  border-color: rgba(234, 88, 12, 0.35);
+  background: color-mix(in srgb, rgba(254, 215, 170, 0.55) 100%, #fff 0%);
+  color: #d97706;
+  filter: drop-shadow(0 0 8px rgba(234, 88, 12, 0.25));
+  animation: victory-icon-pulse-light 2s ease-in-out infinite;
+}
+
+html[data-theme="light"] .battle-replay-ribbon-epic-icon--live {
+  border-color: rgba(5, 150, 105, 0.45);
+  color: #047857;
+  filter: drop-shadow(0 0 10px rgba(5, 150, 105, 0.35));
+  animation: battle-replay-icon-live 1.4s ease-in-out infinite;
+}
+
+html[data-theme="light"] .battle-replay-ribbon-epic-title {
+  background: linear-gradient(
+    180deg,
+    #0f172a 0%,
+    #9a3412 35%,
+    #ea580c 70%,
+    #f97316 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 1px 2px rgba(15, 23, 42, 0.08));
+}
+
+html[data-theme="light"] .battle-replay-ribbon-epic-track {
+  background: rgba(15, 23, 42, 0.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .battle-replay-ribbon-epic {
+    animation: none;
+    box-shadow:
+      0 0 0 1px rgba(251, 146, 60, 0.35),
+      0 8px 28px rgba(0, 0, 0, 0.45);
+  }
+  .battle-replay-ribbon-epic .epic-success-toast-shimmer {
+    animation: none;
+  }
+  .battle-replay-ribbon-epic-icon,
+  .battle-replay-ribbon-epic-icon--live {
+    animation: none;
+  }
+  .battle-replay-ribbon-epic-fill {
+    animation: none;
+  }
+  html[data-theme="light"] .battle-replay-ribbon-epic {
+    box-shadow:
+      0 0 0 1px rgba(234, 88, 12, 0.28),
+      0 8px 28px rgba(15, 23, 42, 0.1);
+  }
+}
+
+.vs-epic {
+  display: inline-block;
+  font-weight: 900;
+  font-style: normal;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  padding-inline: 0.18em 0.22em;
+  transform: skewX(-8deg);
+  transform-origin: center;
+  background: linear-gradient(
+    180deg,
+    #fff7ed 0%,
+    #fb923c 38%,
+    #ea580c 72%,
+    #9a3412 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  /* Sombra en capa aparte para no recortar el trazo del gradiente */
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 8px rgba(234, 88, 12, 0.45))
+    drop-shadow(0 0 24px rgba(251, 146, 60, 0.25));
+}
+
+.vs-epic-wrap {
+  overflow: visible;
+  padding-inline: 0.25rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .vs-epic-glow {
+    animation: vs-pulse 2.8s var(--ease-in-out) infinite;
+  }
+}
+
+@keyframes vs-pulse {
+  0%,
+  100% {
+    filter: drop-shadow(0 2px 8px rgba(234, 88, 12, 0.45))
+      drop-shadow(0 0 20px rgba(251, 146, 60, 0.2));
+  }
+  50% {
+    filter: drop-shadow(0 2px 12px rgba(234, 88, 12, 0.55))
+      drop-shadow(0 0 32px rgba(251, 146, 60, 0.35));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vs-epic-glow {
+    animation: none;
+  }
+}

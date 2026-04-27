@@ -1,0 +1,34 @@
+# ——— Secretos y entorno local (nunca commitear claves) ———
+**/.env
+!**/.env.example
+**/.env.local
+**/.env.*.local
+**/.env.production
+**/.env.development
+
+# ——— Cursor / agentes / AI local (no ruido en el repo) ———
+.cursor/
+.claude/
+**/.claude/
+CLAUDE.md
+AGENTS.md
+**/CLAUDE.md
+**/AGENTS.md
+
+# ——— Sistema / IDE ———
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+
+# ——— Logs y temporales ———
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# ——— Agregados de tests / build sueltos en raíz (si aplica) ———
+coverage/
+dist/

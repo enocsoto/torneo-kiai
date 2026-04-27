@@ -1,0 +1,303 @@
+/* Top page haze (replaces inline radial-gradient) */
+.page-radial {
+  background: radial-gradient(
+    ellipse 80% 50% at 50% -20%,
+    var(--page-radial),
+    transparent
+  );
+}
+
+/* Battle victory panel */
+.win-panel {
+  background: linear-gradient(
+    to bottom,
+    var(--panel-win-from),
+    var(--panel-win-to)
+  );
+  border-color: var(--panel-win-border);
+  box-shadow: 0 20px 50px var(--panel-win-shadow);
+}
+
+/* HP/Ki bar track */
+.hp-bar-track {
+  background-color: var(--bar-track);
+}
+
+/* Soft glow on the action HUD Ki bar */
+.bar-ki-bloom {
+  box-shadow:
+    0 0 12px rgba(34, 211, 238, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar-ki-bloom {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+}
+
+/* Cohesive outline in light theme: overrides inherited “white/x” borders */
+html[data-theme="light"] [data-app-shell] .border-white\/10,
+html[data-theme="light"] [data-app-shell] .border-white\/15,
+html[data-theme="light"] [data-app-shell] .border-dashed.border-white\/15 {
+  border-color: var(--border-subtle);
+}
+
+html[data-theme="light"] [data-app-shell] .ring-white\/5,
+html[data-theme="light"] [data-app-shell] .ring-white\/10 {
+  --tw-ring-color: var(--border-subtle);
+}
+
+html[data-theme="light"] [data-app-shell] .text-orange-300,
+html[data-theme="light"] [data-app-shell] .text-orange-300\/90 {
+  color: var(--accent-text);
+}
+
+html[data-theme="light"] [data-app-shell] .text-slate-100,
+html[data-theme="light"] [data-app-shell] .text-slate-200 {
+  color: var(--foreground-secondary);
+}
+
+html[data-theme="light"] [data-app-shell] .text-slate-300 {
+  color: #334155;
+}
+
+html[data-theme="light"] [data-app-shell] .text-slate-400,
+html[data-theme="light"] [data-app-shell] .text-slate-500 {
+  color: var(--muted);
+}
+
+html[data-theme="light"] [data-app-shell] .bg-white\/5,
+html[data-theme="light"] [data-app-shell] .bg-white\/10 {
+  background-color: var(--surface-raised);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+html[data-theme="light"] [data-app-shell] .shadow-black\/20 {
+  --tw-shadow-color: rgba(15, 23, 42, 0.08);
+}
+
+/* Action section: shadow and border aligned with theme (avoids a “dark” ring in light) */
+.battle-actions-palette--orange {
+  border-color: rgba(251, 146, 60, 0.45);
+  box-shadow: var(--battle-palette-elevate);
+}
+
+.battle-actions-palette--sky {
+  border-color: rgba(56, 189, 248, 0.45);
+  box-shadow: var(--battle-palette-elevate-sky);
+}
+
+/* “Resources this turn” side panel: gradient must not end in black in light theme */
+.battle-hud-side--orange {
+  border-color: rgba(251, 146, 60, 0.4);
+  background: linear-gradient(
+    to bottom,
+    rgba(249, 115, 22, 0.16),
+    var(--surface-glass),
+    var(--battle-hud-sub-end)
+  );
+  box-shadow: inset 0 0 0 1px rgba(251, 146, 60, 0.2);
+}
+
+.battle-hud-side--sky {
+  border-color: rgba(56, 189, 248, 0.4);
+  background: linear-gradient(
+    to bottom,
+    rgba(14, 165, 233, 0.16),
+    var(--surface-glass),
+    var(--battle-hud-sub-end)
+  );
+  box-shadow: inset 0 0 0 1px rgba(56, 189, 248, 0.2);
+}
+
+html[data-theme="light"] [data-app-shell] .battle-hud-side--orange {
+  border-color: rgba(234, 88, 12, 0.2);
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 237, 213, 0.88),
+    var(--surface-glass),
+    rgba(255, 255, 255, 0.55)
+  );
+  box-shadow: inset 0 0 0 1px rgba(234, 88, 12, 0.12);
+}
+
+html[data-theme="light"] [data-app-shell] .battle-hud-side--sky {
+  border-color: rgba(2, 132, 199, 0.22);
+  background: linear-gradient(
+    to bottom,
+    rgba(224, 242, 254, 0.9),
+    var(--surface-glass),
+    rgba(255, 255, 255, 0.6)
+  );
+  box-shadow: inset 0 0 0 1px rgba(2, 132, 199, 0.14);
+}
+
+/* Turn chip: dark theme; light overrides below via html[data-theme="light"] */
+.battle-turn-chip--orange {
+  border: 1px solid rgba(251, 146, 60, 0.4);
+  background: linear-gradient(
+    to bottom,
+    rgba(249, 115, 22, 0.2),
+    rgba(194, 65, 12, 0.1)
+  );
+  color: #fff7ed;
+  box-shadow: inset 0 0 0 1px rgba(251, 146, 60, 0.2);
+}
+
+.battle-turn-chip--sky {
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  background: linear-gradient(
+    to bottom,
+    rgba(14, 165, 233, 0.2),
+    rgba(2, 132, 199, 0.1)
+  );
+  color: #e0f2fe;
+  box-shadow: inset 0 0 0 1px rgba(56, 189, 248, 0.2);
+}
+
+html[data-theme="light"] [data-app-shell] .battle-turn-chip--orange {
+  color: #7c2d12;
+  border-color: rgba(234, 88, 12, 0.3);
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 247, 237, 0.95),
+    rgba(254, 215, 170, 0.45)
+  );
+  box-shadow: inset 0 0 0 1px rgba(234, 88, 12, 0.12);
+}
+
+html[data-theme="light"] [data-app-shell] .battle-turn-chip--sky {
+  color: #0c4a6e;
+  border-color: rgba(2, 132, 199, 0.28);
+  background: linear-gradient(
+    to bottom,
+    rgba(240, 249, 255, 0.98),
+    rgba(186, 230, 253, 0.4)
+  );
+  box-shadow: inset 0 0 0 1px rgba(2, 132, 199, 0.12);
+}
+
+/* Warrior state in HUD: background and text from tokens (no raw white/10) */
+.battle-hud-estado {
+  color: var(--foreground);
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-raised);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+html[data-theme="light"] [data-app-shell] .battle-hud-estado {
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+}
+
+/* Dodge ready: readable violet in light and dark */
+.battle-dodge-hint {
+  color: #c4b5fd;
+}
+
+html[data-theme="light"] [data-app-shell] .battle-dodge-hint {
+  color: #5b21b6;
+}
+
+/* Attacks: damage/ki metadata (both themes) */
+[data-app-shell] .battle-attack-meta {
+  color: var(--muted);
+}
+
+[data-app-shell] .battle-attack-damage {
+  color: var(--foreground-secondary);
+}
+
+html[data-theme="light"] [data-app-shell] .battle-attack-damage {
+  color: #334155;
+}
+
+html[data-theme="light"] [data-app-shell] .battle-attack-ki-ok {
+  color: #0e7490;
+}
+
+/* “Not enough Ki” */
+.battle-ki-warn {
+  color: #fbbf24;
+}
+
+html[data-theme="light"] [data-app-shell] .battle-ki-warn {
+  color: #b45309;
+}
+
+/* Ki bar glow in HUD (avoids a white flash in light theme) */
+html[data-theme="light"] [data-app-shell] .bar-ki-bloom {
+  box-shadow:
+    0 0 8px rgba(6, 182, 212, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Strike callout (attack announcement) */
+.battle-strike-callout {
+  background: var(--strike-bg);
+  border: 1px solid var(--strike-border) !important;
+  color: var(--foreground);
+  box-shadow: var(--strike-shadow);
+}
+
+/* Slot number: both themes via --slot-bg / --foreground */
+[data-app-shell] .battle-attack-slot {
+  color: var(--foreground);
+  background: var(--slot-bg) !important;
+  border: 1px solid var(--border-subtle) !important;
+  --tw-ring-color: var(--border-muted) !important;
+  box-shadow: none;
+}
+
+/* Border and divider under HUD: uses tokens */
+.battle-hud-divider {
+  border-color: var(--border-subtle);
+}
+
+/*
+ * Battle: symmetric horizontal padding on main to center the block;
+ * the fixed SiteToolbar only overlaps the top edge; the right reserve
+ * lives on .battle-page-header, not on all of main.
+ */
+main.battle-page-main {
+  box-sizing: border-box;
+  padding-top: max(3.75rem, calc(0.5rem + env(safe-area-inset-top, 0px)));
+  padding-bottom: 2rem;
+  padding-left: max(1rem, env(safe-area-inset-left, 0px));
+  padding-right: max(1rem, env(safe-area-inset-right, 0px));
+}
+
+@media (min-width: 640px) {
+  main.battle-page-main {
+    padding-top: max(2.75rem, env(safe-area-inset-top, 0px));
+    padding-bottom: 2.5rem;
+    padding-left: max(1.5rem, env(safe-area-inset-left, 0px));
+    padding-right: max(1.5rem, env(safe-area-inset-right, 0px));
+  }
+}
+
+/* Header: right gutter for EN/ES + theme (same as the old main padding-right) */
+.battle-page-header {
+  box-sizing: border-box;
+  padding-right: max(0.5rem, calc(0.5rem + 8.25rem + env(safe-area-inset-right, 0px)));
+}
+
+@media (min-width: 640px) {
+  .battle-page-header {
+    padding-right: max(0.5rem, calc(0.5rem + 8.5rem + env(safe-area-inset-right, 0px)));
+  }
+}
+
+/* /support: right gutter for fixed SiteToolbar (locale + theme) — do not set pl here; use pl-* in markup */
+.support-page-header {
+  box-sizing: border-box;
+  padding-left: max(1.5rem, env(safe-area-inset-left, 0px));
+  padding-right: max(0.5rem, calc(0.5rem + 8.25rem + env(safe-area-inset-right, 0px)));
+}
+
+@media (min-width: 640px) {
+  .support-page-header {
+    padding-left: max(2.5rem, env(safe-area-inset-left, 0px));
+    padding-right: max(0.5rem, calc(0.5rem + 8.5rem + env(safe-area-inset-right, 0px)));
+  }
+}

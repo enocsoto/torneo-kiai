@@ -1,0 +1,95 @@
+/* K.O. — epic stamp over the fighter panel */
+.fighter-ko-epic {
+  position: absolute;
+  inset: 0;
+  z-index: 25;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  border-radius: inherit;
+  overflow: hidden;
+  background: radial-gradient(
+    ellipse 75% 65% at 50% 48%,
+    rgba(0, 0, 0, 0.72) 0%,
+    rgba(127, 29, 29, 0.42) 42%,
+    rgba(0, 0, 0, 0.25) 100%
+  );
+}
+
+.fighter-ko-epic::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  transform-origin: center;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(248, 113, 113, 0.12) 55deg,
+    transparent 110deg,
+    rgba(251, 191, 36, 0.08) 200deg,
+    transparent 280deg
+  );
+  animation: ko-epic-ring 4s var(--ease-in-out) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fighter-ko-epic::after {
+    animation: none;
+  }
+}
+
+@keyframes ko-epic-ring {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.fighter-ko-epic-text {
+  position: relative;
+  z-index: 1;
+  font-weight: 900;
+  font-style: normal;
+  line-height: 0.92;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transform: rotate(-7deg) skewX(-4deg);
+  padding-inline: 0.08em;
+  background: linear-gradient(
+    185deg,
+    #fffef0 0%,
+    #fecaca 28%,
+    #ef4444 55%,
+    #7f1d1d 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(69, 10, 10, 0.35);
+  filter: drop-shadow(0 3px 18px rgba(220, 38, 38, 0.9))
+    drop-shadow(0 0 36px rgba(251, 113, 133, 0.55));
+  font-size: clamp(2.25rem, 12vmin, 4rem);
+  animation: ko-epic-enter 520ms var(--ease-out) both;
+}
+
+@keyframes ko-epic-enter {
+  from {
+    opacity: 0;
+    transform: rotate(-12deg) skewX(-4deg) scale(1.45);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(-7deg) skewX(-4deg) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fighter-ko-epic-text {
+    animation: none;
+    opacity: 1;
+    transform: rotate(-7deg) skewX(-4deg) scale(1);
+  }
+}
