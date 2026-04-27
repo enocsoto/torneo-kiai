@@ -1,0 +1,19 @@
+# No enviar al daemon de Docker (menos subida a Railway, builds más rápidos)
+node_modules
+.next
+out
+.git
+.gitignore
+*.md
+.env
+.env.*
+!.env.example
+npm-debug.log*
+playwright-report
+test-results
+coverage
+.DS_Store
+e2e
+playwright.config.ts
+.vscode
+.idea
