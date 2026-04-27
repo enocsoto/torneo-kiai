@@ -1,0 +1,10 @@
+# Web (Next.js standalone): build con Dockerfile.
+# En Railway: Service → Settings → Root Directory = `frontend`
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+watchPatterns = ["frontend/**"]
+
+[deploy]
+healthcheckPath = "/"
+healthcheckTimeout = 60

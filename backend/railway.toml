@@ -1,0 +1,12 @@
+# API (NestJS): build con Dockerfile para no depender de la detección Railpack
+# en la raíz del monorepo (donde no hay package.json).
+# En Railway: Service → Settings → Root Directory = `backend`
+# (o fija el config en /backend/railway.toml según la UI).
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+watchPatterns = ["backend/**"]
+
+[deploy]
+healthcheckPath = "/health"
+healthcheckTimeout = 30

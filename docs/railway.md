@@ -1,6 +1,23 @@
 # Deploy en Railway
 
-Monorepo sin `package.json` en la raíz: en Railway crea **dos servicios** desde el mismo repo, cada uno con su **Root Directory**.
+## Si el build falla con Railpack (“could not determine how to build” / `start.sh`)
+
+Eso pasa cuando el despliegue usa la **raíz del repo** como contexto: ahí **no hay** `package.json`, y Railpack no detecta Node/Next y acaba en idiomas soportados limitados (p. ej. “Staticfile” solamente).
+
+**Solución (elige una):**
+
+1. **Recomendado:** en cada servicio, **Settings → Root Directory**:
+   - API → `backend`
+   - Web → `frontend`  
+   Así Railpack ve el `package.json` del paquete, o (mejor) el **`railway.toml`** de esa carpeta que fuerza **Dockerfile**.
+
+2. **Forzar Docker:** en el repo ya hay `backend/railway.toml` y `frontend/railway.toml` con `builder = "DOCKERFILE"`. Con **Root Directory** apuntando a `backend` o `frontend`, Railway construye con el `Dockerfile` de cada app (misma lógica que en `docker-compose.yml`).
+
+3. **Variables (alternativa):** en el servicio, `RAILWAY_DOCKERFILE_PATH=Dockerfile` y root directory correcto, según [docs de Docker en Railway](https://docs.railway.com/guides/dockerfiles).
+
+---
+
+Monorepo sin `package.json` en la raíz: en Railway crea **dos servicios** desde el mismo repo, cada uno con su **Root Directory** (o su `railway.toml` bajo esa ruta, ver arriba).
 
 ## Servicios recomendados
 
